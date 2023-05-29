@@ -10,6 +10,10 @@ type UserSelectProps = {
 function UserSelect(props: UserSelectProps) {
     const dispatch = useDispatch();
     const todos = useSelector((state: {list: { todos: any[] }}) => state.list.todos);
+
+    // As described we need to use full functionality of redux-toolkit
+    // So let use import hook from RKTQuery and use it's method to fetch users
+    // And handle loading process
     React.useEffect(
         () => {
             console.log('userSelect');
@@ -19,10 +23,15 @@ function UserSelect(props: UserSelectProps) {
         },
         [],
     )
+
     const [options, setOptions] = React.useState([]);
 
     const { idx } = props;
+
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        // I'd advice to like that
+        // todos.map((todo, index) => index === idx ? { ...todo, user: e.target.value} : todo)
+        // of find it using findIndex method of Array's
         const changedTodos = todos.map((t, index) => {
             const res = { ...t }
             if (index == idx) {
